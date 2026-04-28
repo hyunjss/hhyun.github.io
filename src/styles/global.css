@@ -1,46 +1,67 @@
 :root {
-  /* macOS Light */
-  --sidebar-bg: #e8e8e8;
-  --list-bg: #f5f5f5;
-  --content-bg: #ffffff;
-  --text: #1d1d1f;
+  /* ── macOS Light (Notes 앱 기준) ── */
+  --window-bg:      #d6d6d6;
+  --titlebar-bg:    #ececec;
+  --sidebar-bg:     #f0f0f0;
+  --list-bg:        #fafafa;
+  --content-bg:     #ffffff;
+
+  --text:           #1d1d1f;
   --text-secondary: #3c3c43;
-  --text-muted: #8e8e93;
-  --border: rgba(0, 0, 0, 0.1);
-  --border-strong: rgba(0, 0, 0, 0.18);
-  --accent: #f5a623;
-  --accent-bg: rgba(245, 166, 35, 0.15);
-  --active-bg: rgba(0, 122, 255, 0.12);
-  --active-text: #007aff;
-  --hover-bg: rgba(0, 0, 0, 0.05);
-  --tag-bg: rgba(0, 122, 255, 0.1);
-  --tag-text: #007aff;
-  --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.06);
-  --radius: 8px;
-  --sidebar-width: 200px;
-  --list-width: 280px;
+  --text-muted:     #8e8e93;
+
+  --border:         rgba(0,0,0,0.09);
+  --border-strong:  rgba(0,0,0,0.16);
+
+  --accent:         #f5a623;        /* Notes 노란색 */
+  --accent-muted:   rgba(245,166,35,0.18);
+  --accent-dark:    #e09415;
+
+  --selected-list:  rgba(245,166,35,0.22);
+  --selected-sidebar: rgba(0,0,0,0.08);
+  --hover-bg:       rgba(0,0,0,0.04);
+
+  --tag-bg:         rgba(0,122,255,0.09);
+  --tag-text:       #0071e3;
+  --link:           #0071e3;
+
+  --radius-sm:      5px;
+  --radius:         8px;
+  --radius-lg:      12px;
+
+  --sidebar-width:  200px;
+  --list-width:     270px;
+  --titlebar-h:     44px;
 }
 
 [data-theme='dark'] {
-  --sidebar-bg: #2c2c2e;
-  --list-bg: #1c1c1e;
-  --content-bg: #141414;
-  --text: #f5f5f7;
-  --text-secondary: #ebebf0;
-  --text-muted: #8e8e93;
-  --border: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.14);
-  --accent: #ffd60a;
-  --accent-bg: rgba(255, 214, 10, 0.12);
-  --active-bg: rgba(10, 132, 255, 0.18);
-  --active-text: #0a84ff;
-  --hover-bg: rgba(255, 255, 255, 0.05);
-  --tag-bg: rgba(10, 132, 255, 0.15);
-  --tag-text: #0a84ff;
-  --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.2);
+  --window-bg:      #1c1c1e;
+  --titlebar-bg:    #2c2c2e;
+  --sidebar-bg:     #2c2c2e;
+  --list-bg:        #1c1c1e;
+  --content-bg:     #141414;
+
+  --text:           #f5f5f7;
+  --text-secondary: #e5e5ea;
+  --text-muted:     #8e8e93;
+
+  --border:         rgba(255,255,255,0.07);
+  --border-strong:  rgba(255,255,255,0.12);
+
+  --accent:         #ffd60a;
+  --accent-muted:   rgba(255,214,10,0.15);
+  --accent-dark:    #ffc400;
+
+  --selected-list:  rgba(255,214,10,0.18);
+  --selected-sidebar: rgba(255,255,255,0.08);
+  --hover-bg:       rgba(255,255,255,0.05);
+
+  --tag-bg:         rgba(10,132,255,0.15);
+  --tag-text:       #409cff;
+  --link:           #409cff;
 }
 
-* {
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -52,29 +73,26 @@ html, body, #root {
 }
 
 body {
-  background-color: var(--sidebar-bg);
+  background: var(--window-bg);
   color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
-  line-height: 1.6;
-  transition: background-color 0.2s, color 0.2s;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text',
+               'Helvetica Neue', Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+a { color: inherit; text-decoration: none; }
 
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
+/* 스크롤바 */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: var(--border-strong);
+  background: rgba(0,0,0,0.2);
   border-radius: 3px;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
+[data-theme='dark'] ::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.15);
 }
+::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.35); }

@@ -50,7 +50,6 @@ export default function BlogLayout() {
       const post = getPostBySlug(slug);
       if (post) {
         setActivePost(post);
-        setActiveCategory(post.category);
       }
     }
   }, [slug]);
@@ -73,106 +72,121 @@ export default function BlogLayout() {
 
   return (
     <div className="blog-layout">
-      {/* 왼쪽: 카테고리 사이드바 */}
-      <aside className="blog-sidebar">
-        <div className="blog-sidebar__header">
-          <span className="blog-sidebar__title">hhyun.dev</span>
+
+      {/* ── macOS 타이틀바 ── */}
+      <div className="titlebar">
+        <div className="traffic-lights">
+          <button className="traffic-light traffic-light--close" aria-label="닫기" />
+          <button className="traffic-light traffic-light--min"   aria-label="최소화" />
+          <button className="traffic-light traffic-light--max"   aria-label="최대화" />
+        </div>
+        <span className="titlebar__title">
+          {activePost ? activePost.title : 'hhyun.dev'}
+        </span>
+        <div className="titlebar__actions">
           <button
-            className="theme-toggle"
+            className="titlebar__btn"
+            onClick={() => navigate('/about')}
+            title="소개"
+          >👤</button>
+          <button
+            className="titlebar__btn"
             onClick={() => setTheme(t => t === 'light' ? 'dark' : 'light')}
-            aria-label="테마 전환"
+            title="테마 전환"
           >
             {theme === 'light' ? '🌙' : '☀️'}
           </button>
         </div>
-        <nav className="blog-sidebar__nav">
-          {categories.map(cat => (
-            <button
-              key={cat}
-              className={`sidebar-item${activeCategory === cat && !activePost ? ' active' : ''}`}
-              onClick={() => handleSelectCategory(cat)}
-            >
-              <span className="sidebar-item__icon">{getCategoryIcon(cat)}</span>
-              <span className="sidebar-item__label">{cat}</span>
-              <span className="sidebar-item__count">
-                {cat === '전체' ? allPosts.length : allPosts.filter(p => p.category === cat).length}
-              </span>
-            </button>
-          ))}
-        </nav>
-        <div className="blog-sidebar__footer">
-          <button
-            className={`sidebar-item${activePost === null && false ? ' active' : ''}`}
-            onClick={() => navigate('/about')}
-          >
-            <span className="sidebar-item__icon">👤</span>
-            <span className="sidebar-item__label">소개</span>
-          </button>
-        </div>
-      </aside>
+      </div>
 
-      {/* 가운데: 포스트 목록 */}
-      <section className="blog-list">
-        <div className="blog-list__header">
-          <h2>{activeCategory}</h2>
-          <span className="blog-list__count">{filteredPosts.length}개</span>
-        </div>
-        <div className="blog-list__items">
-          {filteredPosts.length > 0 ? filteredPosts.map(post => (
-            <button
-              key={post.slug}
-              className={`post-item${activePost?.slug === post.slug ? ' active' : ''}`}
-              onClick={() => handleSelectPost(post)}
-            >
-              <div className="post-item__title">{post.title}</div>
-              <div className="post-item__date">{post.date}</div>
-              <div className="post-item__desc">{post.description}</div>
-              <div className="post-item__tags">
-                {post.tags.slice(0, 3).map(tag => (
-                  <span key={tag} className="post-tag">#{tag}</span>
-                ))}
-              </div>
-            </button>
-          )) : (
-            <p className="blog-list__empty">포스트가 없습니다.</p>
-          )}
-        </div>
-      </section>
+      {/* ── 3패널 바디 ── */}
+      <div className="blog-body">
 
-      {/* 오른쪽: 포스트 내용 */}
-      <main className="blog-content">
-        {activePost ? (
-          <div className="blog-content__inner">
-            <header className="blog-content__header">
-              <div className="blog-content__category">{activePost.category}</div>
-              <h1 className="blog-content__title">{activePost.title}</h1>
-              <div className="blog-content__meta">
-                <span>{activePost.date}</span>
-                <span>·</span>
-                <span>{activePost.readingTime}분 읽기</span>
-              </div>
-              <div className="blog-content__tags">
-                {activePost.tags.map(tag => (
-                  <span key={tag} className="post-tag post-tag--lg">#{tag}</span>
-                ))}
-              </div>
-            </header>
-            <article className="markdown-body">
-              <ReactMarkdown
-                remarkPlugins={[remarkGfm]}
-                rehypePlugins={[rehypeHighlight, rehypeSlug]}
+        {/* 왼쪽: 카테고리 사이드바 */}
+        <aside className="blog-sidebar">
+          <div className="blog-sidebar__section-label">카테고리</div>
+          <nav className="blog-sidebar__nav">
+            {categories.map(cat => (
+              <button
+                key={cat}
+                className={`sidebar-item${activeCategory === cat && !activePost ? ' active' : ''}`}
+                onClick={() => handleSelectCategory(cat)}
               >
-                {activePost.content}
-              </ReactMarkdown>
-            </article>
+                <span className="sidebar-item__icon">{getCategoryIcon(cat)}</span>
+                <span className="sidebar-item__label">{cat}</span>
+                <span className="sidebar-item__count">
+                  {cat === '전체'
+                    ? allPosts.length
+                    : allPosts.filter(p => p.category === cat).length}
+                </span>
+              </button>
+            ))}
+          </nav>
+        </aside>
+
+        {/* 가운데: 포스트 목록 */}
+        <section className="blog-list">
+          <div className="blog-list__header">
+            <h2>{activeCategory}</h2>
+            <div className="blog-list__count">{filteredPosts.length}개의 노트</div>
           </div>
-        ) : (
-          <div className="blog-content__empty">
-            <div className="blog-content__empty-icon">📝</div>
-            <p>포스트를 선택해주세요</p>
+          <div className="blog-list__items">
+            {filteredPosts.length > 0 ? filteredPosts.map(post => (
+              <button
+                key={post.slug}
+                className={`post-item${activePost?.slug === post.slug ? ' active' : ''}`}
+                onClick={() => handleSelectPost(post)}
+              >
+                <div className="post-item__title">{post.title}</div>
+                <div className="post-item__date">{post.date} · {post.readingTime}분</div>
+                <div className="post-item__desc">{post.description}</div>
+                <div className="post-item__tags">
+                  {post.tags.slice(0, 3).map(tag => (
+                    <span key={tag} className="post-tag">#{tag}</span>
+                  ))}
+                </div>
+              </button>
+            )) : (
+              <p className="blog-list__empty">포스트가 없습니다.</p>
+            )}
           </div>
-        )}
-      </main>
+        </section>
+
+        {/* 오른쪽: 포스트 내용 */}
+        <main className="blog-content">
+          {activePost ? (
+            <div className="blog-content__inner">
+              <header className="blog-content__header">
+                <div className="blog-content__category">{activePost.category}</div>
+                <h1 className="blog-content__title">{activePost.title}</h1>
+                <div className="blog-content__meta">
+                  <span>{activePost.date}</span>
+                  <span>·</span>
+                  <span>{activePost.readingTime}분 읽기</span>
+                </div>
+                <div className="blog-content__tags">
+                  {activePost.tags.map(tag => (
+                    <span key={tag} className="post-tag post-tag--lg">#{tag}</span>
+                  ))}
+                </div>
+              </header>
+              <article className="markdown-body">
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  rehypePlugins={[rehypeHighlight, rehypeSlug]}
+                >
+                  {activePost.content}
+                </ReactMarkdown>
+              </article>
+            </div>
+          ) : (
+            <div className="blog-content__empty">
+              <div className="blog-content__empty-icon">📝</div>
+              <p>노트를 선택해주세요</p>
+            </div>
+          )}
+        </main>
+      </div>
     </div>
   );
 }
