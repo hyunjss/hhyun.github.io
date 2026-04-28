@@ -1,37 +1,72 @@
+.about-wrap {
+  height: 100vh;
+  background: var(--content-bg);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 1.5rem 4rem;
+}
+
 .about {
-  padding-top: 3rem;
-  padding-bottom: 4rem;
   max-width: 600px;
+  width: 100%;
+}
+
+.about__back {
+  background: none;
+  border: none;
+  color: var(--active-text);
+  font-size: 0.88rem;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  transition: opacity 0.15s;
+}
+.about__back:hover {
+  opacity: 0.7;
 }
 
 .about h1 {
   font-size: 2rem;
   font-weight: 800;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
 }
 
 .about__intro {
   color: var(--text-muted);
-  font-size: 1rem;
+  font-size: 0.95rem;
   line-height: 1.7;
   margin-bottom: 2.5rem;
 }
 
 .about__section {
   margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+.about__section:last-child {
+  border-bottom: none;
 }
 
 .about__section h2 {
-  font-size: 1.1rem;
+  font-size: 0.72rem;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
   margin-bottom: 0.75rem;
-  color: var(--text);
 }
 
 .about__section ul {
   padding-left: 1.2rem;
-  color: var(--text-muted);
-  line-height: 1.8;
+  color: var(--text-secondary);
+  line-height: 1.9;
+  font-size: 0.9rem;
 }
 
 .about__skills {
@@ -45,15 +80,18 @@
   background: var(--tag-bg);
   color: var(--tag-text);
   border-radius: 20px;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 600;
 }
 
 .about__link {
-  color: var(--primary);
+  color: var(--active-text);
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   transition: opacity 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
 }
 
 .about__link:hover {
