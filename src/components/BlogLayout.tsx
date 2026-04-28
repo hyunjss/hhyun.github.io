@@ -66,7 +66,6 @@ export default function BlogLayout() {
 
   function handleSelectCategory(cat: string) {
     setActiveCategory(cat);
-    setActivePost(null);
     navigate('/');
   }
 
