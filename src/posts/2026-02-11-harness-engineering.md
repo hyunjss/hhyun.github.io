@@ -1,7 +1,7 @@
 ---
 title: "Harness Engineering: AI 에이전트 시대의 엔지니어링"
 date: "2026-02-11"
-category: "FE"
+category: "AI/Engineering"
 tags: ["AI", "harness-engineering", "codex", "agent", "openai"]
 description: "단 3명의 엔지니어가 5개월 동안 코드 한 줄 직접 쓰지 않고 100만 줄 프로덕션 코드를 완성한 방법 — OpenAI의 Harness Engineering 정리"
 ---
